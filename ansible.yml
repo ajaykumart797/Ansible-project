@@ -12,12 +12,15 @@
       environment:
         KUBECONFIG: /home/test/.kube/config
       become_user: test
+      ignore_errors: yes 
+      
 
     - name: Delete old service
       command: kubectl delete -f /home/test/Service.yml
       environment:
         KUBECONFIG: /home/test/.kube/config
       become_user: test
+      ignore_errors: yes 
 
     - name: Create new deployment
       command: kubectl apply -f /home/test/Deployment.yml
