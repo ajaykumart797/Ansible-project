@@ -1,11 +1,32 @@
-- hosts: all
+- hosts: db
   become: true
-  tasks: 
-     - name: delete old deployment
-       command: kubectl delete -f /home/test/Deployment.yml
-     - name: delete old service
-       command: kubectl delete -f /home/test/Service.yml
-     - name: create new deployment
-       command: kubectl apply -f /home/test/Deployment.yml
-     - name: create new service
-       command: kubectl apply -f /home/test/Service.yml
+  tasks:
+    - name: Set Minikube Context
+      command: kubectl config use-context minikube
+      environment:
+        KUBECONFIG: /home/test/.kube/config
+      become_user: test
+
+    - name: Delete old deployment
+      command: kubectl delete -f /home/test/Deployment.yml
+      environment:
+        KUBECONFIG: /home/test/.kube/config
+      become_user: test
+
+    - name: Delete old service
+      command: kubectl delete -f /home/test/Service.yml
+      environment:
+        KUBECONFIG: /home/test/.kube/config
+      become_user: test
+
+    - name: Create new deployment
+      command: kubectl apply -f /home/test/Deployment.yml
+      environment:
+        KUBECONFIG: /home/test/.kube/config
+      become_user: test
+
+    - name: Create new service
+      command: kubectl apply -f /home/test/Service.yml
+      environment:
+        KUBECONFIG: /home/test/.kube/config
+      become_user: test
