@@ -1,7 +1,7 @@
 # Use the Ubuntu base image
 FROM ubuntu:latest
 
-MAINTAINER abc@gmail.com
+MAINTAINER codetech@gmail.com
 # Update the package list and install required packages using apt-get
 RUN apt-get update && apt-get install -y apache2 zip unzip curl && apt-get clean
 
