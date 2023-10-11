@@ -1,16 +1,14 @@
-#  Use a base image with Nginx pre-installed
-# FROM nginx:latest
+# Use the Ubuntu base image
+FROM ubuntu:latest
 
-# # Expose port 80 for Nginx
-# EXPOSE 80
-FROM  centos:latest
 MAINTAINER abc@gmail.com
-RUN yum install -y httpd zip\
- unzip
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
-WORKDIR /var/www/html/
-RUN unzip photogenic.zip
-RUN cp -rvf photogenic/* .
-RUN rm -rf photogenic photogenic.zip
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
-EXPOSE 80 22
+# Update the package list and install required packages using apt-get
+RUN apt-get update && apt-get install -y apache2 zip unzip curl && apt-get clean
+
+# Download and extract the zip file (make sure the URL is correct and accessible)
+RUN curl -o /tmp/photogenic.zip https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip \
+    && unzip /tmp/photogenic.zip -d /var/www/html/ \
+    && rm /tmp/photogenic.zip
+
+# Start the Apache HTTP server
+CMD ["apache2ctl", "-D", "FOREGROUND"]
