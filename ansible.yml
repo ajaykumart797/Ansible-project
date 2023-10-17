@@ -28,7 +28,7 @@
         KUBECONFIG: /home/test/.kube/config
       become_user: test
 
-    - name: Create new service
+    - name: Create new services
       command: kubectl apply -f /home/test/Service.yml
       environment:
         KUBECONFIG: /home/test/.kube/config
